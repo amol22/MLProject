@@ -4,13 +4,16 @@ from src.exception import CustomException
 from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from config import DataIngestionConfig
+from config import DataIngestionConfig, DataTransformationConfig
+from src.components.data_transformation import DataTransformation
 
 class DataIngestion:
     def __init__(self):
         self.ingestion_config = DataIngestionConfig()
         
     def data_ingestion(self):
+        """Ingests the data into a dataframe and performs a train-test split
+        """
         logging.info("Data ingestion initiated")
         try:
             df = pd.read_csv("data/train-data.csv")
@@ -34,4 +37,6 @@ class DataIngestion:
         
 if __name__ =="__main__":
     obj = DataIngestion()
-    obj.data_ingestion()
+    train_path,test_path = obj.data_ingestion()
+    data_transform = DataTransformation()
+    data_transform.initiate_data_transformation(train_path,test_path)
