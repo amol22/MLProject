@@ -3,7 +3,7 @@ import sys
 from src.exception import CustomException
 from src.logger import logging
 from utils import save_object,evaluate_models
-from config import ModelTrainerConfig
+from config import ModelTrainerConfig, params
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.metrics import r2_score
 from xgboost import XGBRegressor
@@ -27,7 +27,7 @@ class ModelTrainer:
                 "XGBRegressor": XGBRegressor()
             }
             
-            models_report = evaluate_models(X_train,y_train,X_test,y_test,models)
+            models_report = evaluate_models(X_train,y_train,X_test,y_test,models,params)
             best_model_score = max(sorted(models_report.values()))
             best_model_name = list(models_report.keys())[
                 list(models_report.values()).index(best_model_score)]
